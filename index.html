@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daraz Deals - Exclusive Offers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #ff6600;
+            --secondary: #2a2a2a;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), #ff8533);
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .search-bar {
+            display: flex;
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .search-bar button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* Banner Slider */
+        .banner-slider {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            margin: 15px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .slide:nth-child(1) {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+        }
+
+        .slide:nth-child(2) {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+        }
+
+        .slide:nth-child(3) {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .slider-dot.active {
+            background: white;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 10px;
+            background: white;
+            margin: 15px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .category {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .category-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Products Grid */
+        .section-title {
+            text-align: center;
+            margin: 30px 0 20px;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+            margin: 10px auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            padding: 0 15px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-info {
+            padding: 12px;
+        }
+
+        .product-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .current-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        .discount {
+            background: var(--danger);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .buy-now-btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .buy-now-btn:hover {
+            background: #e55a00;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 30px 20px;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Product Detail Page */
+        .product-detail {
+            display: none;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--light-gray);
+            color: var(--dark);
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #dde1e6;
+        }
+
+        .detail-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .detail-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .detail-image {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        @media (min-width: 768px) {
+            .detail-image {
+                height: 400px;
+            }
+        }
+
+        .detail-info {
+            padding: 20px;
+        }
+
+        .detail-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .detail-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .detail-current-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .detail-original-price {
+            font-size: 1.2rem;
+            text-decoration: line-through;
+            color: var(--gray);
+        }
+
+        .detail-discount {
+            background: var(--danger);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .detail-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: var(--gray);
+        }
+
+        .detail-features {
+            margin-bottom: 20px;
+        }
+
+        .detail-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .detail-features li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-features li i {
+            color: var(--success);
+        }
+
+        .detail-buy-btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .detail-buy-btn:hover {
+            background: #e55a00;
+        }
+
+        /* Admin Panel Styles */
+        .admin-panel {
+            display: none;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .admin-login {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-login h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #e55a00;
+        }
+
+        .admin-dashboard {
+            display: none;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .admin-tab {
+            padding: 10px 20px;
+            background: var(--light-gray);
+            border-radius: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.3s;
+        }
+
+        .admin-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .admin-content {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .admin-table th {
+            background: var(--light-gray);
+            font-weight: 600;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+
+        .edit-btn {
+            background: var(--info);
+            color: white;
+        }
+
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+        }
+
+        .add-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                margin: 0;
+                width: 100%;
+            }
+
+            .categories {
+                overflow-x: auto;
+                justify-content: flex-start;
+                gap: 20px;
+                padding: 15px;
+            }
+
+            .category {
+                min-width: 70px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- User Panel -->
+    <div id="user-panel">
+        <header>
+            <div class="header-container">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <span>Daraz Deals</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-actions">
+                    <a href="#"><i class="fas fa-user"></i> Account</a>
+                    <a href="#" id="admin-link"><i class="fas fa-cog"></i> Admin</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="banner-slider">
+            <div class="slides">
+                <div class="slide">Flash Sale - Up to 70% Off</div>
+                <div class="slide">Tech Week - Best Deals on Electronics</div>
+                <div class="slide">Free Shipping on Orders Over $50</div>
+            </div>
+            <div class="slider-nav">
+                <div class="slider-dot active"></div>
+                <div class="slider-dot"></div>
+                <div class="slider-dot"></div>
+            </div>
+        </div>
+
+        <div class="categories">
+            <div class="category">
+                <div class="category-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="category-name">Electronics</div>
+            </div>
+            <div class="category">
+                <div class="category-icon">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <div class="category-name">Fashion</div>
+            </div>
+            <div class="category">
+                <div class="category-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="category-name">Home</div>
+            </div>
+            <div class="category">
+                <div class="category-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="category-name">Groceries</div>
+            </div>
+            <div class="category">
+                <div class="category-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <div class="category-name">Sports</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Today's Best Deals</h2>
+
+        <div class="products-grid" id="products-container">
+            <!-- Products will be loaded here by JavaScript -->
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Daraz Deals</h3>
+                    <p>Your one-stop destination for the best deals on Daraz. We bring you exclusive offers and discounts on a wide range of products.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">How to Buy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Commerce Street, City</li>
+                        <li><i class="fas fa-phone"></i> +1 234 567 8900</li>
+                        <li><i class="fas fa-envelope"></i> support@darazdeals.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Daraz Deals. All rights reserved.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Product Detail Page -->
+    <div class="product-detail" id="product-detail">
+        <a href="#" class="back-btn" id="back-to-products">
+            <i class="fas fa-arrow-left"></i> Back to Products
+        </a>
+        <div class="detail-container">
+            <div class="detail-image" id="detail-image"></div>
+            <div class="detail-info">
+                <h1 class="detail-title" id="detail-title"></h1>
+                <div class="detail-price">
+                    <span class="detail-current-price" id="detail-current-price"></span>
+                    <span class="detail-original-price" id="detail-original-price"></span>
+                    <span class="detail-discount" id="detail-discount"></span>
+                </div>
+                <p class="detail-description" id="detail-description"></p>
+                <div class="detail-features">
+                    <ul id="detail-features">
+                        <!-- Features will be added by JavaScript -->
+                    </ul>
+                </div>
+                <a href="#" class="detail-buy-btn" id="detail-buy-btn" target="_blank">
+                    <i class="fas fa-shopping-cart"></i> Buy Now on Daraz
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-login" id="admin-login">
+            <h2>Admin Login</h2>
+            <div class="form-group">
+                <label for="admin-username">Username</label>
+                <input type="text" id="admin-username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="admin-password">Password</label>
+                <input type="password" id="admin-password" placeholder="Enter password">
+            </div>
+            <button class="login-btn" id="admin-login-btn">Login</button>
+        </div>
+
+        <div class="admin-dashboard" id="admin-dashboard">
+            <div class="admin-header">
+                <h2>Admin Dashboard</h2>
+                <button class="back-btn" id="back-to-user">
+                    <i class="fas fa-arrow-left"></i> Back to Site
+                </button>
+            </div>
+
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="products">Products</div>
+                <div class="admin-tab" data-tab="banners">Banners</div>
+                <div class="admin-tab" data-tab="reviews">Reviews</div>
+                <div class="admin-tab" data-tab="settings">Settings</div>
+            </div>
+
+            <div class="admin-content">
+                <div class="admin-tab-content" id="products-tab">
+                    <button class="add-btn" id="add-product-btn">
+                        <i class="fas fa-plus"></i> Add New Product
+                    </button>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Discount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-products-table">
+                            <!-- Products will be loaded here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-tab-content" id="banners-tab" style="display: none;">
+                    <button class="add-btn">
+                        <i class="fas fa-plus"></i> Add New Banner
+                    </button>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Banner Title</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Flash Sale - Up to 70% Off</td>
+                                <td>Active</td>
+                                <td>
+                                    <button class="action-btn edit-btn">Edit</button>
+                                    <button class="action-btn delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Tech Week - Best Deals on Electronics</td>
+                                <td>Active</td>
+                                <td>
+                                    <button class="action-btn edit-btn">Edit</button>
+                                    <button class="action-btn delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Free Shipping on Orders Over $50</td>
+                                <td>Inactive</td>
+                                <td>
+                                    <button class="action-btn edit-btn">Edit</button>
+                                    <button class="action-btn delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-tab-content" id="reviews-tab" style="display: none;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product</th>
+                                <th>Customer</th>
+                                <th>Rating</th>
+                                <th>Review</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Wireless Earbuds</td>
+                                <td>John Doe</td>
+                                <td>5/5</td>
+                                <td>Great product, excellent sound quality!</td>
+                                <td>
+                                    <button class="action-btn edit-btn">Approve</button>
+                                    <button class="action-btn delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Smart Watch</td>
+                                <td>Jane Smith</td>
+                                <td>4/5</td>
+                                <td>Good value for money, battery could be better</td>
+                                <td>
+                                    <button class="action-btn edit-btn">Approve</button>
+                                    <button class="action-btn delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-tab-content" id="settings-tab" style="display: none;">
+                    <div class="form-group">
+                        <label for="site-name">Site Name</label>
+                        <input type="text" id="site-name" value="Daraz Deals">
+                    </div>
+                    <div class="form-group">
+                        <label for="site-description">Site Description</label>
+                        <textarea id="site-description" rows="3" class="form-control">Your one-stop destination for the best deals on Daraz</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Contact Email</label>
+                        <input type="email" id="contact-email" value="support@darazdeals.com">
+                    </div>
+                    <button class="login-btn">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            siteName: "Daraz Deals",
+            adminCredentials: {
+                username: "admin",
+                password: "admin123"
+            },
+            darazBaseUrl: "https://www.daraz.com.bd/products/",
+            products: [
+                {
+                    id: 1,
+                    title: "Wireless Bluetooth Earbuds",
+                    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80",
+                    currentPrice: "$24.99",
+                    originalPrice: "$49.99",
+                    discount: "50% OFF",
+                    description: "High-quality wireless earbuds with noise cancellation, 20 hours battery life, and comfortable fit.",
+                    features: [
+                        "Noise cancellation technology",
+                        "20 hours battery life",
+                        "IPX7 waterproof",
+                        "Bluetooth 5.0",
+                        "Touch controls"
+                    ],
+                    darazUrl: "wireless-bluetooth-earbuds-i1234567.html"
+                },
+                {
+                    id: 2,
+                    title: "Smart Fitness Watch",
+                    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1099&q=80",
+                    currentPrice: "$39.99",
+                    originalPrice: "$79.99",
+                    discount: "50% OFF",
+                    description: "Advanced fitness tracker with heart rate monitoring, sleep tracking, and multiple sports modes.",
+                    features: [
+                        "Heart rate monitoring",
+                        "Sleep tracking",
+                        "Multiple sports modes",
+                        "5-day battery life",
+                        "Water resistant"
+                    ],
+                    darazUrl: "smart-fitness-watch-i2345678.html"
+                },
+                {
+                    id: 3,
+                    title: "Portable Power Bank 10000mAh",
+                    image: "https://images.unsplash.com/photo-1609592810794-1c0d476d7e39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
+                    currentPrice: "$15.99",
+                    originalPrice: "$29.99",
+                    discount: "47% OFF",
+                    description: "Compact and powerful power bank with fast charging technology and dual USB ports.",
+                    features: [
+                        "10000mAh capacity",
+                        "Fast charging technology",
+                        "Dual USB ports",
+                        "LED power indicator",
+                        "Compact design"
+                    ],
+                    darazUrl: "portable-power-bank-10000mah-i3456789.html"
+                },
+                {
+                    id: 4,
+                    title: "Wireless Gaming Mouse",
+                    image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1167&q=80",
+                    currentPrice: "$29.99",
+                    originalPrice: "$59.99",
+                    discount: "50% OFF",
+                    description: "High-precision wireless gaming mouse with RGB lighting and programmable buttons.",
+                    features: [
+                        "High-precision sensor",
+                        "RGB lighting effects",
+                        "Programmable buttons",
+                        "Ergonomic design",
+                        "Long battery life"
+                    ],
+                    darazUrl: "wireless-gaming-mouse-i4567890.html"
+                },
+                {
+                    id: 5,
+                    title: "Bluetooth Speaker",
+                    image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1031&q=80",
+                    currentPrice: "$19.99",
+                    originalPrice: "$39.99",
+                    discount: "50% OFF",
+                    description: "Portable Bluetooth speaker with 360° sound, waterproof design, and 12-hour battery.",
+                    features: [
+                        "360° surround sound",
+                        "IPX7 waterproof",
+                        "12-hour battery life",
+                        "Bluetooth 5.0",
+                        "Built-in microphone"
+                    ],
+                    darazUrl: "bluetooth-speaker-i5678901.html"
+                },
+                {
+                    id: 6,
+                    title: "Laptop Backpack",
+                    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+                    currentPrice: "$22.99",
+                    originalPrice: "$45.99",
+                    discount: "50% OFF",
+                    description: "Durable laptop backpack with multiple compartments, USB charging port, and water-resistant material.",
+                    features: [
+                        "Fits up to 15.6\" laptop",
+                        "Multiple compartments",
+                        "USB charging port",
+                        "Water-resistant material",
+                        "Ergonomic design"
+                    ],
+                    darazUrl: "laptop-backpack-i6789012.html"
+                }
+            ]
+        };
+
+        // DOM Elements
+        const userPanel = document.getElementById('user-panel');
+        const productDetail = document.getElementById('product-detail');
+        const adminPanel = document.getElementById('admin-panel');
+        const adminLogin = document.getElementById('admin-login');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const productsContainer = document.getElementById('products-container');
+        const adminProductsTable = document.getElementById('admin-products-table');
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load products on the user panel
+            loadProducts();
+            
+            // Load products in admin panel
+            loadAdminProducts();
+            
+            // Initialize banner slider
+            initBannerSlider();
+            
+            // Set up event listeners
+            setupEventListeners();
+        });
+
+        // Load products to the user panel
+        function loadProducts() {
+            productsContainer.innerHTML = '';
+            
+            CONFIG.products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image" style="background-image: url('${product.image}')"></div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="product-price">
+                            <span class="current-price">${product.currentPrice}</span>
+                            <span class="original-price">${product.originalPrice}</span>
+                            <span class="discount">${product.discount}</span>
+                        </div>
+                        <button class="buy-now-btn" data-id="${product.id}">Buy Now</button>
+                    </div>
+                `;
+                productsContainer.appendChild(productCard);
+            });
+        }
+
+        // Load products to the admin panel
+        function loadAdminProducts() {
+            adminProductsTable.innerHTML = '';
+            
+            CONFIG.products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>${product.title}</td>
+                    <td>${product.currentPrice}</td>
+                    <td>${product.discount}</td>
+                    <td>
+                        <button class="action-btn edit-btn" data-id="${product.id}">Edit</button>
+                        <button class="action-btn delete-btn" data-id="${product.id}">Delete</button>
+                    </td>
+                `;
+                adminProductsTable.appendChild(row);
+            });
+        }
+
+        // Initialize banner slider
+        function initBannerSlider() {
+            let currentSlide = 0;
+            const slides = document.querySelector('.slides');
+            const dots = document.querySelectorAll('.slider-dot');
+            const totalSlides = document.querySelectorAll('.slide').length;
+            
+            // Auto slide every 5 seconds
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateSlider();
+            }, 5000);
+            
+            // Add click events to dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    updateSlider();
+                });
+            });
+            
+            function updateSlider() {
+                slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Update active dot
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Admin link click
+            document.getElementById('admin-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                userPanel.style.display = 'none';
+                productDetail.style.display = 'none';
+                adminPanel.style.display = 'block';
+                adminLogin.style.display = 'block';
+                adminDashboard.style.display = 'none';
+            });
+            
+            // Back to user panel from admin
+            document.getElementById('back-to-user').addEventListener('click', function(e) {
+                e.preventDefault();
+                adminPanel.style.display = 'none';
+                userPanel.style.display = 'block';
+            });
+            
+            // Back to products from product detail
+            document.getElementById('back-to-products').addEventListener('click', function(e) {
+                e.preventDefault();
+                productDetail.style.display = 'none';
+                userPanel.style.display = 'block';
+            });
+            
+            // Admin login
+            document.getElementById('admin-login-btn').addEventListener('click', function() {
+                const username = document.getElementById('admin-username').value;
+                const password = document.getElementById('admin-password').value;
+                
+                if (username === CONFIG.adminCredentials.username && 
+                    password === CONFIG.adminCredentials.password) {
+                    adminLogin.style.display = 'none';
+                    adminDashboard.style.display = 'block';
+                } else {
+                    alert('Invalid username or password!');
+                }
+            });
+            
+            // Admin tabs
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.admin-tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all tab contents
+                    document.querySelectorAll('.admin-tab-content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    // Show selected tab content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).style.display = 'block';
+                });
+            });
+            
+            // Buy now buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('buy-now-btn')) {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    showProductDetail(productId);
+                }
+            });
+            
+            // Add product button
+            document.getElementById('add-product-btn').addEventListener('click', function() {
+                alert('Add new product functionality would be implemented here!');
+            });
+            
+            // Edit and delete buttons in admin
+            adminProductsTable.addEventListener('click', function(e) {
+                if (e.target.classList.contains('edit-btn')) {
+                    const productId = e.target.getAttribute('data-id');
+                    alert(`Edit product ${productId} functionality would be implemented here!`);
+                } else if (e.target.classList.contains('delete-btn')) {
+                    const productId = e.target.getAttribute('data-id');
+                    if (confirm('Are you sure you want to delete this product?')) {
+                        alert(`Delete product ${productId} functionality would be implemented here!`);
+                    }
+                }
+            });
+        }
+
+        // Show product detail page
+        function showProductDetail(productId) {
+            const product = CONFIG.products.find(p => p.id === productId);
+            
+            if (product) {
+                document.getElementById('detail-image').style.backgroundImage = `url('${product.image}')`;
+                document.getElementById('detail-title').textContent = product.title;
+                document.getElementById('detail-current-price').textContent = product.currentPrice;
+                document.getElementById('detail-original-price').textContent = product.originalPrice;
+                document.getElementById('detail-discount').textContent = product.discount;
+                document.getElementById('detail-description').textContent = product.description;
+                
+                // Set features
+                const featuresList = document.getElementById('detail-features');
+                featuresList.innerHTML = '';
+                product.features.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<i class="fas fa-check"></i> ${feature}`;
+                    featuresList.appendChild(li);
+                });
+                
+                // Set buy now link
+                document.getElementById('detail-buy-btn').href = CONFIG.darazBaseUrl + product.darazUrl;
+                
+                // Show product detail and hide user panel
+                userPanel.style.display = 'none';
+                productDetail.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
